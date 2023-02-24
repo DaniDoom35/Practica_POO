@@ -29,27 +29,33 @@ villano = Personaje(especieV,nombreV,alturaV)
 #3. usar atributos
 
 
+heroe.setnombre(" Pepucho ")
+
+
 print("")
 print("####### Objeto Heroe ####")
-print("El personaje se llama: " + heroe.nombre)
-print("Pertenece a la especie: " + heroe.especie)
-print("Y tiene una altura de: " + str(heroe.altura))
+print("El personaje se llama: " + heroe.getnombre())
+print("Pertenece a la especie: " + heroe.getespecie())
+print("Y tiene una altura de: " + str(heroe.getaltura()))
+heroe.correr(True)
+heroe.lanzarGranadas()
+heroe.recargaArma(recargarH)
+heroe.getpensar()
 
 
 print("")
 print("####### Objeto Villano ####")
-print("El personaje se llama: " + villano.nombre)
-print("Pertenece a la especie:asd " + villano.especie)
-print("Y tiene una altura de: " + str(villano.altura))
+print("El personaje se llama: " + villano.getnombre())
+print("Pertenece a la especie:asd " + villano.getespecie())
+print("Y tiene una altura de: " + str(villano.getaltura()))
+villano.correr(False)
+villano.lanzarGranadas()
+villano.recargaArma(recargarV)
+
 
 
 #3. Usar metodos
 
-heroe.correr(True)
-heroe.lanzarGranadas()
-heroe.recargaArma(recargarH)
 
-villano.correr(False)
-villano.lanzarGranadas()
-villano.recargaArma(recargarV)
+
 
