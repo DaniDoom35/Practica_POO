@@ -28,7 +28,7 @@ villano = Personaje(especieV,nombreV,alturaV)
 
 #3. usar atributos
 
-
+#Ejemplo Set para el 1 atributo
 heroe.setnombre(" Pepucho ")
 
 
@@ -40,7 +40,10 @@ print("Y tiene una altura de: " + str(heroe.getaltura()))
 heroe.correr(True)
 heroe.lanzarGranadas()
 heroe.recargaArma(recargarH)
-heroe.getpensar()
+
+##
+# Ejempo de Error
+# heroe.__pensar()
 
 
 print("")
