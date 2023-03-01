@@ -1,7 +1,17 @@
 from tkinter import Tk,Button,Frame,messagebox
 
+
+#5. Declaramos funciones
 def mostrarmensajes():
     messagebox.showinfo("Aviso", "Presionaste el boton")
+    messagebox.showerror("Error: ", "Todo Fallo con exito")
+    print(messagebox.askyesno("Una Question", "¿Le vas al America?"))
+    
+#6.  Creamos una funcion para agregar botones para los mensajes
+def agregarbton():
+    botonnaranja.config(text ="+",bg="green",fg="white")
+    botonNuevo = Button(seccion3, text="Nuevo")
+    botonNuevo.pack()
 
 
 #1. Instaciamos el objeto llamado "Ventana"
@@ -33,9 +43,11 @@ botonrojo.grid(row = 0, column = 0 )
 botonverde = Button(seccion2, text = "HOLA ROJO", fg = "white", bg = "#56FF20")
 botonverde.grid(row = 1, column = 1 )
 
-botonnaranja = Button(seccion3, text = "HOLA NARANJA", fg = "white", bg = "#FF7000")
+botonnaranja = Button(seccion3, text = "HOLA NARANJA", fg = "white", bg = "#FF7000", command=agregarbton)
 botonnaranja.configure(height = 2,width=10)
 botonnaranja.pack()
+
+#4. Posicionamiento de elementos 
 
 #Final. Llamamos a su main (Tiene que ir al final del codigo)
 
