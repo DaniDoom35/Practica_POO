@@ -7,7 +7,7 @@ class generador :
         
         self.__letras = pletras
         self.__numeros = pnumeros
-        self.__cespecial = pespecial
+        self.__cespecial = pespecisal
         
         
         
