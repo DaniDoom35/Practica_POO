@@ -10,19 +10,19 @@ def mandar ():
 
 
 
-#crear ventana
+#ventana
 
 ventana = Tk()
 
 ventana.title("Examen")
 
 
-#crear un frame
+#frame
 
 miFrame = Frame(ventana, width=1200, height=600)
 
 
-#agregar , label entry y botones
+#label entry y botones
 
 miLabel = Label(miFrame, text="Nombre")
 
@@ -76,9 +76,6 @@ miEntry5.place(x=200, y=300)
 miBoton = Button(miFrame, text="Enviar",command=mandar)
 
 miBoton.place(x=100, y=400)
-
-
-#agregar frame a la ventana
 
 
 
