@@ -3,6 +3,18 @@
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
+from ControladorDB import *
+
+#. Crear una objeto de tipo contralador
+
+controlador= controladorBD()
+
+#Procedermos a guardar usando el metodo del objeto controlador.
+
+def ejecutaInsert():
+    controlador.guardarUsuario(varNom.get(),varCor.get(),varCon.get())
+    
+
 
 
 #Ventana
@@ -37,7 +49,7 @@ varCon= tk.StringVar()
 lblCon= Label(pestana1,text="Contraseña: ").pack()
 textCon= Entry(pestana1,textvariable=varCon).pack()
 
-btnGuardar= Button(pestana1,text="Guardar Usuario").pack()
+btnGuardar= Button(pestana1,text="Guardar Usuario",command=ejecutaInsert).pack()
 
 
 panel.add(pestana1,text="Formulario de Usuarios")
