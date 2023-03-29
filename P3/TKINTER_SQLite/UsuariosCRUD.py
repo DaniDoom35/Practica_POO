@@ -15,6 +15,25 @@ def ejecutaInsert():
     controlador.guardarUsuario(varNom.get(),varCor.get(),varCon.get())
     
 
+def ejecutaSelectU():
+    
+    rsUsuario = controlador.consultaUsuario(varBus.get())
+    
+    for usu in rsUsuario:   
+        
+        cadena = str(usu[0]) + " " + usu[1] + " " + usu[2] +" " +  str(usu[3])
+    
+    if(rsUsuario):
+         print(cadena)
+         
+    else:
+    
+        messagebox.showwarning("CUIDADO","No hay usuario")
+        
+       
+        
+        
+   
 
 
 #Ventana
@@ -50,6 +69,31 @@ lblCon= Label(pestana1,text="Contraseña: ").pack()
 textCon= Entry(pestana1,textvariable=varCon).pack()
 
 btnGuardar= Button(pestana1,text="Guardar Usuario",command=ejecutaInsert).pack()
+
+
+#Pestaña 2 : Buscar ususario
+
+titulo2 = Label(pestana2,text="Buscar Usuario",fg="Blue",font=("Comic Sans",18)).pack()
+
+varBus= tk.StringVar()
+lblid= Label(pestana2,text="Identificador Usuario: ").pack()
+textid= Entry(pestana2,textvariable=varBus).pack()
+
+btnBusqueda= Button(pestana2,text="Buscar Usuario",command=ejecutaSelectU).pack()
+
+subBus= Label(pestana2,text="Registrado: ", fg="Blue", font=("Modern,15")).pack()
+textBus= tk.Text(pestana2,height=5,width=52).pack()
+
+
+#Mostrar ususario en el subBus
+
+
+
+
+#Crear la funcion para buscar un usuario
+
+    
+
 
 
 panel.add(pestana1,text="Formulario de Usuarios")

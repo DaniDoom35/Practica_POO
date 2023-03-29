@@ -16,7 +16,6 @@ class controladorBD:
             conexion= sqlite3.connect("C:/Users/iSkye/Documents/GitHub/Practica/P3/TKINTER_SQLite/DBRegistrados.db")
             print("Conectado con exito")
             return conexion
-            
         except sqlite3.OperationalError:
             
             print("Fallo en la conexion")
@@ -60,5 +59,43 @@ class controladorBD:
         print(conHa)
               
         return conHa
+    
+    # Metodo consulta usuario
+    
+    def consultaUsuario(self,id):
+        
+        #1. Prepara la conexion
+        
+        conx = self.conexionBD()
+        
+
+        #2. Verificar que el ID no este vacio
+        
+        if( id == ""):
+            messagebox.showwarning("CUIDADO","Revisa tus datos")
+            conx.close()
+        else:
             
+            #3. Proceder a buscar
+            
+            try:
+                #4. Prepara lo necesario para el select
+                
+                cursor = conx.cursor()
+                sqlSelect="select * from TBRegistrados where id = "+id
+               
+                
+                #5. Ejecucion y guardado de la consulta
+
+                
+                cursor.execute(sqlSelect)
+                RSusuario= cursor.fetchall()
+                conx.close()
+                
+                
+                return RSusuario
+                
+            
+            except sqlite3.OperationalError:
+                print("Fallo en la consulta") 
     
