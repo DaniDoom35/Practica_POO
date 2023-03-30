@@ -24,12 +24,16 @@ def ejecutaSelectU():
         cadena = str(usu[0]) + " " + usu[1] + " " + usu[2] +" " +  str(usu[3])
     
     if(rsUsuario):
-         print(cadena)
-         
+        textBus.insert('0.0',cadena)
+        print(cadena)
+    
     else:
     
         messagebox.showwarning("CUIDADO","No hay usuario")
         
+
+            
+
        
         
         
@@ -77,15 +81,20 @@ titulo2 = Label(pestana2,text="Buscar Usuario",fg="Blue",font=("Comic Sans",18))
 
 varBus= tk.StringVar()
 lblid= Label(pestana2,text="Identificador Usuario: ").pack()
+
+    
+
 textid= Entry(pestana2,textvariable=varBus).pack()
 
 btnBusqueda= Button(pestana2,text="Buscar Usuario",command=ejecutaSelectU).pack()
 
-subBus= Label(pestana2,text="Registrado: ", fg="Blue", font=("Modern,15")).pack()
-textBus= tk.Text(pestana2,height=5,width=52).pack()
+subBus= Label(pestana2,text="Registrado:", fg="Blue", font=("Modern,15")).pack()
+textBus= tk.Text(pestana2,height=5,width=52)
+
+        
 
 
-#Mostrar ususario en el subBus
+
 
 
 
@@ -94,6 +103,7 @@ textBus= tk.Text(pestana2,height=5,width=52).pack()
 
     
 
+textBus.pack()
 
 
 panel.add(pestana1,text="Formulario de Usuarios")
