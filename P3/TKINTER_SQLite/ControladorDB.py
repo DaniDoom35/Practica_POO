@@ -99,3 +99,25 @@ class controladorBD:
             except sqlite3.OperationalError:
                 print("Fallo en la consulta") 
     
+    
+    # Metodo para consultar ususario
+    
+    def consultaUsuario2(self):
+        
+        conx = self.conexionBD()
+        
+        try:
+        
+            cursor = conx.cursor()
+            sqlSelect1="select * from TBRegistrados"
+
+            cursor.execute(sqlSelect1)
+            aUsuario= cursor.fetchall()
+            conx.close()
+            
+            
+        except sqlite3.OperationalError:
+            print("Fallo en la consulta")
+                
+        
+        

@@ -34,9 +34,23 @@ def ejecutaSelectU():
 
             
 
-       
+def EjecutaUsu ():
+        
+        aUsuario = controlador.consultaUsuario2()
         
         
+        for i in tree.get_children():
+            tree.delete(i)
+        
+        
+        for usu in aUsuario:   
+        
+            cadena2 = str(usu[0]) + " " + usu[1] + " " + usu[2] +" " +  str(usu[3])
+            
+            tree.insert(parent='',index='end', values=(usu[0],usu[1],usu[2]))
+            
+            print(cadena2)
+    
    
 
 
@@ -90,6 +104,39 @@ btnBusqueda= Button(pestana2,text="Buscar Usuario",command=ejecutaSelectU).pack(
 
 subBus= Label(pestana2,text="Registrado:", fg="Blue", font=("Modern,15")).pack()
 textBus= tk.Text(pestana2,height=5,width=52)
+
+
+#3. Pestaña 3 consultar usuarios
+
+titulo3 = Label(pestana3,text="Consultar Usuarios",fg="Blue",font=("Comic Sans",18)).pack()
+
+#1. Agregar un treeview a la pestaña 3
+
+tree = ttk.Treeview(pestana3,columns=(1,2,3),show="headings",height="5")
+
+#2. Agregar las columnas al treeview
+
+tree.heading(1,text="ID")
+
+tree.heading(2,text="Nombre")
+
+tree.heading(3,text="Correo")
+
+
+tree.pack()
+
+
+
+btnBusqueda= Button(pestana3,text="Buscar Usuario",command=EjecutaUsu).pack()
+
+
+
+#4. Pestaña 4 actualizar usuario
+
+titulo4 = Label(pestana4,text="Actualizar Usuario",fg="Blue",font=("Comic Sans",18)).pack()
+
+
+
 
         
 
