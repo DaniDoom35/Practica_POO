@@ -118,6 +118,37 @@ class controladorBD:
             
         except sqlite3.OperationalError:
             print("Fallo en la consulta")
+            
+            
+    # Metodo Para actualizar usuario
+    
+    def actualizarUsuario(self,id,nom,cor,con):
+        
+        #1. Prepara la conexion
+        
+        conx = self.conexionBD()
+        
+        #2. Verificar que los parametros no esten vacios
+        
+        if (id == "" or nom == "" or cor == "" or con == ""):
+            messagebox.showwarning("CUIDADO","Revisa tus datos")
+            conx.close()
+        else:
+            
+            #3. Prepara los datos y los query SQL
+            
+            cursor = conx.cursor()
+            datos=(nom,cor,con,id)
+            qrUpdate="update TBRegistrados set nombre = ?,correo = ?,contra = ? where id = ?"
+            
+            #4. Proceder a actualizar
+            
+            cursor.execute(qrUpdate,datos)
+            conx.commit()
+            conx.close()
+            messagebox.showinfo("EXITO","Se actualizo el usuario")
+            
+    
                 
         
         

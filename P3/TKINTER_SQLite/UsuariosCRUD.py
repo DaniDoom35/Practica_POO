@@ -15,15 +15,21 @@ def ejecutaInsert():
     controlador.guardarUsuario(varNom.get(),varCor.get(),varCon.get())
     
 
+
+
+
 def ejecutaSelectU():
     
     rsUsuario = controlador.consultaUsuario(varBus.get())
     
+    
+ 
     for usu in rsUsuario:   
         
         cadena = str(usu[0]) + " " + usu[1] + " " + usu[2] +" " +  str(usu[3])
     
     if(rsUsuario):
+        
         textBus.insert('0.0',cadena)
         print(cadena)
     
@@ -32,7 +38,7 @@ def ejecutaSelectU():
         messagebox.showwarning("CUIDADO","No hay usuario")
         
 
-            
+# Funcion parqa consultar ususario con sqlite 3 y treeview
 
 def EjecutaUsu ():
         
@@ -50,6 +56,23 @@ def EjecutaUsu ():
             tree.insert(parent='',index='end', values=(usu[0],usu[1],usu[2]))
             
             print(cadena2)
+
+
+    
+def ejecutaUpdate():
+    
+    controlador.actualizarUsuario(varId.get(),varNom.get(),varCor.get(),varCon.get())
+    
+    varId.set("")
+    varNom.set("")
+    varCor.set("")
+    varCon.set("")
+    
+    EjecutaUsu()
+    
+    # Funcion para eliminar usuario con sqlite3
+    
+
     
    
 
@@ -127,30 +150,45 @@ tree.pack()
 
 
 
+
 btnBusqueda= Button(pestana3,text="Buscar Usuario",command=EjecutaUsu).pack()
 
+textBus.pack()
 
-
-#4. Pestaña 4 actualizar usuario
+#4. Pestaña 4 aztulizar usuario ccon metodo actulizar ususario
 
 titulo4 = Label(pestana4,text="Actualizar Usuario",fg="Blue",font=("Comic Sans",18)).pack()
 
+varId= tk.StringVar()
 
+lblid= Label(pestana4,text="Identificador Usuario: ").pack()
 
+textid= Entry(pestana4,textvariable=varId).pack()
 
-        
+varNom= tk.StringVar()
 
+lblNom= Label(pestana4,text="Nombre: ").pack()
 
+textNom= Entry(pestana4,textvariable=varNom).pack()
 
+varCor= tk.StringVar()
 
+lblCor= Label(pestana4,text="Correo: ").pack()
 
+textCor= Entry(pestana4,textvariable=varCor).pack()
 
+varCon= tk.StringVar()
 
-#Crear la funcion para buscar un usuario
+lblCon= Label(pestana4,text="Contraseña: ").pack()
+
+textCon= Entry(pestana4,textvariable=varCon).pack()
+
+btnGuardar= Button(pestana4,text="Actualizar Usuario",command=ejecutaUpdate).pack()
+
 
     
 
-textBus.pack()
+
 
 
 panel.add(pestana1,text="Formulario de Usuarios")
