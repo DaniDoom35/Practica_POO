@@ -27,11 +27,15 @@ class controladorBD:
         #1. Primer paso para insertar es llamar a la conexion.
         conx = self.conexionBD()
         
+        
         #2. Revisar que los parametros no esten vacios
         
         if (nom == "" or cor == "" or con == ""):
+            
             messagebox.showwarning("CUIDADO","Revisa tus datos")
             conx.close()
+            
+            
         else:
             #3. Preparamos los datos y los query SQL
             
@@ -39,9 +43,8 @@ class controladorBD:
             conH= self.encriptarCon(con)
             datos=(nom,cor,conH)
             qrInsert="insert into TBRegistrados(correo,contra,nombre) values(?,?,?)"
-            
-            
-            
+      
+            print(nom,cor,con)
             #4. Proceder a insertar
             
             cursor.execute(qrInsert,datos)
@@ -56,7 +59,7 @@ class controladorBD:
         conPlana = conPlana.encode() #Convertir contraseña a Bytes
         sal= bcrypt.gensalt()
         conHa= bcrypt.hashpw(conPlana,sal)
-        print(conHa)
+      
               
         return conHa
     
@@ -102,7 +105,7 @@ class controladorBD:
     
     # Metodo para consultar ususario
     
-    def consultaUsuario2(self):
+    def consultaUsuarios(self):
         
         conx = self.conexionBD()
         
@@ -112,43 +115,74 @@ class controladorBD:
             sqlSelect1="select * from TBRegistrados"
 
             cursor.execute(sqlSelect1)
-            aUsuario= cursor.fetchall()
+            rsUsuario= cursor.fetchall()
             conx.close()
             
+            return rsUsuario
             
         except sqlite3.OperationalError:
-            print("Fallo en la consulta")
+            
+            print("Fallo en la consulta")    
+
+            
+            
+
+
             
             
     # Metodo Para actualizar usuario
     
-    def actualizarUsuario(self,id,nom,cor,con):
+    def actualizarUsuario(self,id,nom2,cor2,con2):
         
-        #1. Prepara la conexion
         
         conx = self.conexionBD()
         
-        #2. Verificar que los parametros no esten vacios
-        
-        if (id == "" or nom == "" or cor == "" or con == ""):
+        if (id == "" or nom2 == "" or cor2 == "" or con2 == ""):
             messagebox.showwarning("CUIDADO","Revisa tus datos")
             conx.close()
         else:
             
-            #3. Prepara los datos y los query SQL
-            
             cursor = conx.cursor()
-            datos=(nom,cor,con,id)
-            qrUpdate="update TBRegistrados set nombre = ?,correo = ?,contra = ? where id = ?"
-            
-            #4. Proceder a actualizar
-            
-            cursor.execute(qrUpdate,datos)
+            sqlUpdate="update TBRegistrados set nombre = '"+nom2+"', correo = '"+cor2+"', contra = '"+con2+"' where id = "+id
+            cursor.execute(sqlUpdate)
             conx.commit()
-            conx.close()
             messagebox.showinfo("EXITO","Se actualizo el usuario")
-            
+            conx.close()
     
+    
+    
+            
+    # confirmación antes de Eliminar un registro
+    
+    def eliminarusuario(self,id):
+        
+        conx = self.conexionBD()
+        
+        if (id == ""):
+            messagebox.showwarning("CUIDADO","Revisa tus datos")
+            conx.close()
+        else:
+            
+            respuesta = messagebox.askquestion("Eliminar","¿Deseas eliminar el registro?")
+            
+            if(respuesta == "yes"):
                 
+               
+                cursor = conx.cursor()
+                sqlDelete="delete from TBRegistrados where id = "+id
+                cursor.execute(sqlDelete)
+                conx.commit()
+              
+                messagebox.showinfo("EXITO","Se elimino el usuario")
         
         
+                conx.close()
+             
+                
+            else:
+                
+                # Messagebox no se elimino el registro
+                
+                messagebox.showinfo("INFO","No se elimino el usuario")
+                conx.close()
+                
