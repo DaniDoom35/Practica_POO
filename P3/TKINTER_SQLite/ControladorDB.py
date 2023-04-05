@@ -22,7 +22,7 @@ class controladorBD:
             
             
      #.Metodo  para insertar       
-    def guardarUsuario(self,nom,cor,con):
+    def guardarUsuario(self,cor,con,nom):
         
         #1. Primer paso para insertar es llamar a la conexion.
         conx = self.conexionBD()
@@ -42,7 +42,7 @@ class controladorBD:
             cursor = conx.cursor()
             conH= self.encriptarCon(con)
             datos=(nom,cor,conH)
-            qrInsert="insert into TBRegistrados(correo,contra,nombre) values(?,?,?)"
+            qrInsert="insert into TBRegistrados(nombre,correo,contra) values(?,?,?)"
       
             print(nom,cor,con)
             #4. Proceder a insertar
@@ -110,7 +110,8 @@ class controladorBD:
         conx = self.conexionBD()
         
         try:
-        
+            
+            
             cursor = conx.cursor()
             sqlSelect1="select * from TBRegistrados"
 
@@ -130,26 +131,38 @@ class controladorBD:
 
             
             
-    # Metodo Para actualizar usuario
+    # Metodo Para actualizar usuario con encriptacion de contraseña
     
-    def actualizarUsuario(self,id,nom2,cor2,con2):
-        
+    def actualizarUsuario(self,id,cor,con,nom):
         
         conx = self.conexionBD()
         
-        if (id == "" or nom2 == "" or cor2 == "" or con2 == ""):
+       
+        
+        if (nom == "" or cor == "" or con == ""):
+            
             messagebox.showwarning("CUIDADO","Revisa tus datos")
             conx.close()
+            
+            
         else:
             
             cursor = conx.cursor()
-            sqlUpdate="update TBRegistrados set nombre = '"+nom2+"', correo = '"+cor2+"', contra = '"+con2+"' where id = "+id
-            cursor.execute(sqlUpdate)
+            conH= self.encriptarCon(con)
+            datos=(cor,conH,nom,id)
+            qrUpdate="update TBRegistrados set correo = ?, contra = ?, nombre = ? where id = ?"
+      
+           
+            
+            cursor.execute(qrUpdate,datos)
             conx.commit()
-            messagebox.showinfo("EXITO","Se actualizo el usuario")
             conx.close()
+            messagebox.showinfo("EXITO","Se actualizo el usuario")
     
     
+
+            
+
     
             
     # confirmación antes de Eliminar un registro
@@ -158,31 +171,40 @@ class controladorBD:
         
         conx = self.conexionBD()
         
-        if (id == ""):
-            messagebox.showwarning("CUIDADO","Revisa tus datos")
-            conx.close()
-        else:
+        
+        
+        try:
             
-            respuesta = messagebox.askquestion("Eliminar","¿Deseas eliminar el registro?")
+        
+            if (id == ""):
+                messagebox.showwarning("CUIDADO","Revisa tus datos")
+                conx.close()
+            else:
             
-            if(respuesta == "yes"):
+                respuesta = messagebox.askquestion("Eliminar","¿Deseas eliminar el registro?")
+            
+                if(respuesta == "yes"):
                 
                
-                cursor = conx.cursor()
-                sqlDelete="delete from TBRegistrados where id = "+id
-                cursor.execute(sqlDelete)
-                conx.commit()
+                    cursor = conx.cursor()
+                    sqlDelete="delete from TBRegistrados where id = "+id
+                    cursor.execute(sqlDelete)
+                    conx.commit()
               
-                messagebox.showinfo("EXITO","Se elimino el usuario")
+                    messagebox.showinfo("EXITO","Se elimino el usuario")
         
         
-                conx.close()
+                    conx.close()
              
                 
-            else:
+                else:
                 
                 # Messagebox no se elimino el registro
                 
-                messagebox.showinfo("INFO","No se elimino el usuario")
-                conx.close()
-                
+                    messagebox.showinfo("INFO","No se elimino el usuario")
+                    conx.close()
+        except sqlite3.OperationalError:
+            
+            print("Fallo en la consulta")    
+
+             

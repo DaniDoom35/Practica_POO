@@ -12,7 +12,7 @@ controlador= controladorBD()
 #Procedermos a guardar usando el metodo del objeto controlador.
 
 def ejecutaInsert():
-    controlador.guardarUsuario(varNom.get(),varCor.get(),varCon.get())
+    controlador.guardarUsuario(varCor.get(),varCon.get(),varNom.get())
     
 
 # Funcion para buscar a un usuario con id y ponerlo en el cuadro de text
@@ -31,11 +31,11 @@ def ejecutaSelectU():
  
     for usu in rsUsuario:   
         
-        cadena2 = (" | " + str(usu[0]) + " | " + usu[1] + " | " + usu[2] +" | " +  str(usu[3]))
-    
+        cadena = " 1 " + str(usu[0]) + " | " + str(usu[1]) + " | " + str(usu[2]) +" | " +  str(usu[3])
+        print(cadena)
     if(rsUsuario):
         
-        textBus.insert('0.0',cadena2)
+        textBus.insert('0.0',cadena)
     else:
     
         messagebox.showwarning("CUIDADO","No hay usuario")
@@ -49,30 +49,33 @@ def ejecutaSelectT():
     
     tree.delete(*tree.get_children())
     
-
-    
-    
         
     # Agregar todos los usuarios a un treeview
     
     rsUsuarios = controlador.consultaUsuarios()
     
-    for usu2 in rsUsuarios:
+    for usu in rsUsuarios:
        
-        tree.insert(parent='',index='end',values=(usu2[0],usu2[1],usu2[2]))
+        tree.insert(parent='',index='end',values=(usu[0],usu[3],usu[1]))
         
-        print(usu2)
     
         
 
 def ejecutaUpdate():
     
-    controlador.actualizarUsuario(varId2.get(),varNom2.get(),varCor2.get(),varCon2.get())
+    controlador.actualizarUsuario(varId2.get(),varCor2.get(),varCon2.get(),varNom2.get()) 
+    
+    
     
     varId2.set("")
     varNom2.set("")
     varCor2.set("")
     varCon2.set("")
+    
+
+
+    
+    
 
 def ejecutaDelete():
     
@@ -129,7 +132,7 @@ textCon= Entry(pestana1,textvariable=varCon).pack()
 btnGuardar= Button(pestana1,text="Guardar Usuario",command=ejecutaInsert).pack()
 
 
-#Pestaña 2 : Buscar ususario
+#Pestaña 2 : Buscar usuario
 
 titulo2 = Label(pestana2,text="Buscar Usuario",fg="Blue",font=("Modern",18)).pack()
 
@@ -187,19 +190,19 @@ varNom2= tk.StringVar()
 
 lblNom= Label(pestana4,text="Nombre: ").pack()
 
-textNom= Entry(pestana4,textvariable=varNom2).pack()
+textNom2= Entry(pestana4,textvariable=varNom2).pack()
 
 varCor2= tk.StringVar()
 
 lblCor= Label(pestana4,text="Correo: ").pack()
 
-textCor= Entry(pestana4,textvariable=varCor2).pack()
+textCor2= Entry(pestana4,textvariable=varCor2).pack()
 
 varCon2= tk.StringVar()
 
 lblCon= Label(pestana4,text="Contraseña: ").pack()
 
-textCon= Entry(pestana4,textvariable=varCon2).pack()
+textCon2= Entry(pestana4,textvariable=varCon2).pack()
 
 btnGuardar= Button(pestana4,text="Actualizar Usuario",command=ejecutaUpdate).pack()
 
