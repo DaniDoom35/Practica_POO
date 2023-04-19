@@ -1,4 +1,3 @@
-# Crear una ventana con pestañás
 
 from tkinter import *
 from tkinter import ttk
@@ -7,7 +6,7 @@ from Controlador3P import *
 
 
 
-#. Crear una objeto de tipo contralador
+#contralador
 
 controlador= controladorMT()
 
@@ -23,32 +22,56 @@ def ejecutaInsert():
     
     
     print(mat,can)
+    
+#Funcion Para consultar todos los materiales
+
+def ejecutaSelectT():
+    
+    
+    
+    tree.delete(*tree.get_children())
+    
+        
+   
+    
+    rsMateriales = controlador.consultaMateriales()
+    
+    for mat in rsMateriales:
+       
+        tree.insert(parent='',index='end',values=(mat[0],mat[1],mat[2]))
+        
+        
+#Funcion para Actualizar material
+
+def ejecutaUpdate():
+    
+    id=varId.get()
+    mat=varNom2.get()
+    can=varCan2.get()
+    
+    
+    controlador.actualizarMaterial(id,mat,can)
+    
+    print(id,mat,can)
 
 
 
-#Ventana
 Ventana = Tk()
 Ventana.title("Ferreteria")
 Ventana.geometry("600x400")
 
-#Notebook
+
 
 panel = ttk.Notebook(Ventana)
 panel.pack(fill="both",expand="yes")
 
-# pestañas
-
 pestana1 = ttk.Frame(panel)
-
 pestana2 = ttk.Frame(panel)
-
 pestana3 = ttk.Frame(panel)
 
 
-#Pestaña Insertar Material solo cantidad y nombre
 
-
-titulo = Label(pestana1,text="Registro de Materiales",fg="Blue",font=("Modern",18)).pack()
+titulo = Label(pestana1,text="Registro de Materiales",fg="Blue",font=(20)).pack()
 
 
 varNom= tk.StringVar()
@@ -62,28 +85,53 @@ textCan= Entry(pestana1,textvariable=varCan).pack()
 
 btnGuardar= Button(pestana1,text="Guardar Usuario",command=ejecutaInsert).pack()
 
-#Pestaña Consultar Materiales
-
-titulo = Label(pestana2,text="Consulta de Materiales",fg="Blue",font=("Modern",18)).pack()
 
 
+titulo3 = Label(pestana2,text="Mostrar Materiales",fg="Blue",font=(20)).pack()
 
-#Pestaña Actualizar Materiales
-
-titulo = Label(pestana3,text="Actualizacion de Materiales",fg="Blue",font=("Modern",18)).pack()
+tree = ttk.Treeview(pestana2,columns=(1,2,3),show="headings",height="5")
 
 
 
+tree.heading(1,text="ID")
+
+tree.heading(2,text="Nombre")
+
+tree.heading(3,text="Cantidad")
+
+
+tree.pack()
+
+
+btnMostrar= Button(pestana2,text="Mostrar Materiales",command=ejecutaSelectT).pack()
+
+
+
+titulo3 = Label(pestana3,text="Actualizar Materiales",fg="Blue",font=(20)).pack()
+
+varId= tk.StringVar()
+
+lblId= Label(pestana3,text="ID: ").pack()
+
+textId= Entry(pestana3,textvariable=varId).pack()
+
+varNom2= tk.StringVar()
+
+lblNom2= Label(pestana3,text="Nombre: ").pack()
+
+textNom2= Entry(pestana3,textvariable=varNom2).pack()
+
+varCan2= tk.StringVar()
+
+lblCan2= Label(pestana3,text="Cantidad: ").pack()
+
+textCan2= Entry(pestana3,textvariable=varCan2).pack()
+
+btnActualizar= Button(pestana3,text="Actualizar Material",command=ejecutaUpdate).pack()
 
 
 
 
-
-
-
-
-
-#Agregar las pestañas al panel
 
 panel.add(pestana1,text="Insertar Material")
 panel.add(pestana2,text="Consultar Materiales")

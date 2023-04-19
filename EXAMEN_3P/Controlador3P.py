@@ -44,7 +44,6 @@ class controladorMT:
             datos=(mat,can)
             qrInsert="insert into MatConstruccion(Material,Cantidad) values(?,?)"
       
-            print(mat,can)
           
             
             cursor.execute(qrInsert,datos)
@@ -53,5 +52,47 @@ class controladorMT:
             messagebox.showinfo("EXITO","Se guardo el material")
         
         
+#Metodo Consultar todos los materiales 
+
+    def consultaMateriales(self):
         
+        conx = self.conexionBD()
+        
+        cursor = conx.cursor()
+        
+        qrSelect = "select * from MatConstruccion"
+        
+        cursor.execute(qrSelect)
+        
+        rsMateriales = cursor.fetchall()
+        
+        conx.close()
+        
+        return rsMateriales
+    
+#Metodo Actualizar material 
+
+    def actualizarMaterial(self,id,mat,can):
+        
+        conx = self.conexionBD()
+        
+        if (id == "" or mat == "" or can == ""):
+            
+            messagebox.showwarning("CUIDADO","Revisa tus datos")
+            conx.close()
+            
+        else:
+            
+            cursor = conx.cursor()
+            datos=(mat,can,id)
+            qrUpdate="update MatConstruccion set Material=?, Cantidad=? where IDMat=?"
+            
+            cursor.execute(qrUpdate,datos)
+            conx.commit()
+            conx.close()
+            messagebox.showinfo("EXITO","Se actualizo el material")
+
+
+
+   
       
